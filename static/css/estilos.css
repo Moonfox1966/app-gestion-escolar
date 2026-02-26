@@ -1,0 +1,12 @@
+/* (Alumno) CSS centralizado: extraído de los <style> de tus maquetas IA */
+body {
+  font-family: 'Lexend', sans-serif;
+  min-height: max(884px, 100dvh);
+}
+
+/* (Alumno) utilidades para scroll horizontal limpio */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* (Alumno) si alguna maqueta usa fill-current en Material Symbols */
+.fill-current { font-variation-settings: 'FILL' 1; }
