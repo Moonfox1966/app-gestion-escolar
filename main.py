@@ -6,7 +6,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Mis apps del liceo digital 👇
+    # Mis apps del liceo digital
     'alumnos',
     'profesores',
     'cursos',

@@ -1,62 +1,38 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
+from .forms import CursoForm
 
+@never_cache
+@login_required
 def lista_cursos(request):
     cursos = [
-        {
-            "nombre": "Matemáticas Avanzadas",
-            "codigo": "MAT-402",
-            "profesor": "Prof. Ricardo Méndez",
-            "horario": "Lun, Mie - 08:00 AM",
-            "nivel": "Secundaria",
-            "icono": "calculate",
-            "gradiente": "from-blue-600 to-primary",
-        },
-        {
-            "nombre": "Historia Universal",
-            "codigo": "HIS-201",
-            "profesor": "Prof. Elena Santos",
-            "horario": "Mar, Jue - 10:30 AM",
-            "nivel": "Bachillerato",
-            "icono": "history_edu",
-            "gradiente": "from-amber-500 to-orange-600",
-        },
-        {
-            "nombre": "Ciencias Naturales",
-            "codigo": "CIE-105",
-            "profesor": "Prof. Carlos Ruiz",
-            "horario": "Vie - 09:00 AM",
-            "nivel": "Primaria",
-            "icono": "biotech",
-            "gradiente": "from-emerald-500 to-teal-700",
-        },
-        {
-            "nombre": "Literatura Hispana",
-            "codigo": "LIT-330",
-            "profesor": "Dra. Marta Villa",
-            "horario": "Mie, Jue - 12:00 PM",
-            "nivel": "Secundaria",
-            "icono": "auto_stories",
-            "gradiente": "from-purple-500 to-indigo-700",
-        },
-        {
-            "nombre": "Física Mecánica",
-            "codigo": "FIS-450",
-            "profesor": "Ing. Sergio Lara",
-            "horario": "Lun, Vie - 10:30 AM",
-            "nivel": "Bachillerato",
-            "icono": "rocket_launch",
-            "gradiente": "from-red-500 to-rose-700",
-        },
-        {
-            "nombre": "Artes Plásticas",
-            "codigo": "ART-101",
-            "profesor": "Prof. Sofía Luna",
-            "horario": "Mar - 02:00 PM",
-            "nivel": "Primaria",
-            "icono": "palette",
-            "gradiente": "from-pink-500 to-fuchsia-600",
-        },
+        {"nombre": "Matemáticas Avanzadas", "codigo": "MAT-402", "profesor": "Prof. Ricardo Méndez", "horario": "Lun, Mie - 08:00 AM", "nivel": "Secundaria"},
+        {"nombre": "Historia Universal", "codigo": "HIS-201", "profesor": "Prof. Elena Santos", "horario": "Mar, Jue - 10:30 AM", "nivel": "Bachillerato"},
+        {"nombre": "Ciencias Naturales", "codigo": "CIE-105", "profesor": "Prof. Carlos Ruiz", "horario": "Vie - 09:00 AM", "nivel": "Primaria"},
     ]
 
-    contexto = {"cursos": cursos}
-    return render(request, "cursos/lista_cursos.html", contexto)
+    ultimo = request.session.get("ultimo_curso")
+    if ultimo:
+        cursos.insert(0, ultimo)
+
+    return render(request, "cursos/lista_cursos.html", {"cursos": cursos})
+
+@never_cache
+@login_required
+def curso_form_view(request):
+    if request.method == "POST":
+        form = CursoForm(request.POST)
+        if form.is_valid():
+            request.session["ultimo_curso"] = form.cleaned_data
+            return redirect("cursos:resultado_curso")
+    else:
+        form = CursoForm()
+
+    return render(request, "cursos/curso_form.html", {"form": form})
+
+@never_cache
+@login_required
+def resultado_curso_view(request):
+    curso = request.session.get("ultimo_curso")
+    return render(request, "cursos/curso_resultado.html", {"curso": curso})

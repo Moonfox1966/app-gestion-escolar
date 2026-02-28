@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Curso Guardado{% endblock %}
+
+{% block content %}
+<main class="max-w-md mx-auto w-full px-4 py-6 pb-24">
+  <h2 class="text-xl font-bold mb-4">Curso Guardado</h2>
+
+  {% if curso %}
+    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+      <p><strong>Nombre:</strong> {{ curso.nombre }}</p>
+      <p><strong>Código:</strong> {{ curso.codigo }}</p>
+      <p><strong>Profesor:</strong> {{ curso.profesor }}</p>
+      <p><strong>Horario:</strong> {{ curso.horario }}</p>
+      <p><strong>Nivel:</strong> {{ curso.nivel }}</p>
+    </div>
+  {% else %}
+    <div class="bg-yellow-50 border border-yellow-200 text-yellow-900 p-4 rounded-xl">
+      No hay curso guardado todavía. Ingresa uno primero.
+    </div>
+  {% endif %}
+
+  <a class="inline-block mt-4 text-primary font-bold" href="{% url 'cursos:ingresar_curso' %}">
+    Volver al formulario
+  </a>
+</main>
+{% endblock %}

@@ -52,10 +52,28 @@
         Gestión Escolar
       </h1>
 
-      <div class="flex w-10 items-center justify-end">
-        <button class="flex items-center justify-center rounded-full h-10 w-10 bg-primary/10 text-primary">
-          <span class="material-symbols-outlined">account_circle</span>
-        </button>
+      <!-- Login / Logout -->
+      <div class="flex items-center gap-2 justify-end">
+        {% if user.is_authenticated %}
+          <span class="text-xs text-slate-500 dark:text-slate-400 hidden sm:inline">
+            {{ user.username }}
+          </span>
+
+          <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit"
+                    class="inline-flex items-center gap-1 rounded-full h-10 px-3 bg-primary/10 text-primary hover:bg-primary/20">
+              <span class="material-symbols-outlined">logout</span>
+              <span class="text-sm font-semibold hidden sm:inline">Cerrar sesión</span>
+            </button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}"
+             class="inline-flex items-center gap-1 rounded-full h-10 px-3 bg-primary/10 text-primary hover:bg-primary/20">
+            <span class="material-symbols-outlined">login</span>
+            <span class="text-sm font-semibold hidden sm:inline">Iniciar sesión</span>
+          </a>
+        {% endif %}
       </div>
     </div>
 
@@ -80,7 +98,7 @@
          href="{% url 'cursos:lista_cursos' %}">
         <span class="text-sm font-semibold">Cursos</span>
       </a>
-    </nav>>
+    </nav>
   </header>
 
   <!-- Contenido variable (hueco) -->
@@ -90,7 +108,7 @@
   <footer class="bg-slate-900 text-slate-400 p-6 mt-auto">
     <div class="max-w-7xl mx-auto">
       <p class="text-xs text-center">
-        © 2024 Gestión Escolar. Plantillas con herencia y datos dinámicos.
+        © 2026 Gestión Escolar. Plantillas con herencia y datos dinámicos.
       </p>
     </div>
   </footer>

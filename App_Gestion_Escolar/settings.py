@@ -3,7 +3,11 @@ from pathlib import Path
 # (Alumno) BASE_DIR apunta a la carpeta raíz del proyecto (donde está manage.py)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ⚠️ Importante:
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'
+LOGIN_URL = 'login'
+
+# Importante:
 # (Alumno) Yo NO puedo saber tu SECRET_KEY real. Mantén el que Django te generó.
 SECRET_KEY = "REEMPLAZA_ESTO_POR_TU_SECRET_KEY_REAL"
 
