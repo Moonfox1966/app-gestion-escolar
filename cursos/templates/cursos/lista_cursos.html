@@ -7,13 +7,12 @@
   <!-- Encabezado + botón para ir al formulario -->
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
     <div>
-      <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Catálogo de Cursos</h1>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Cursos</h1>
       <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">
-        Listado dinámico (incluye el último curso ingresado).
+        Listado desde base de datos (curso + profesor + alumnos).
       </p>
     </div>
 
-    <!-- Botón que lleva al formulario /cursos/ingresar/ -->
     <a
       href="{% url 'cursos:ingresar_curso' %}"
       class="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm inline-flex items-center justify-center"
@@ -22,14 +21,14 @@
     </a>
   </div>
 
-  <!-- Search and Filters (visual) -->
+  <!-- Buscador (solo visual por ahora) -->
   <div class="mb-8">
     <div class="flex flex-col md:flex-row gap-4">
       <div class="relative flex-grow">
         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
         <input
           class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-          placeholder="Buscar por nombre, profesor o código..."
+          placeholder="Buscar por nombre del curso o profesor..."
           type="text"
         />
       </div>
@@ -41,53 +40,49 @@
     </div>
   </div>
 
-  <!-- Grid dinámica -->
   {% if cursos %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {% for curso in cursos %}
-        <div class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow group">
-
-          <!-- Hero con gradiente (si viene vacío desde form, ponemos uno por defecto) -->
-          <div class="h-40 bg-gradient-to-br {{ curso.gradiente|default:'from-blue-600 to-primary' }} relative flex items-center justify-center">
-            <span class="material-symbols-outlined text-6xl text-white/40">
-              {{ curso.icono|default:'book' }}
-            </span>
-
-            <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs text-white font-medium">
-              {{ curso.nivel|default:"Sin nivel" }}
-            </div>
-          </div>
-
+        <div class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm">
           <div class="p-5">
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">
               {{ curso.nombre }}
             </h3>
 
-            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">
-              {{ curso.codigo|default:"SIN-COD" }}
-            </p>
-
+            <!-- Profesor -->
             <div class="flex items-center gap-3 mb-3">
               <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
                 <span class="material-symbols-outlined text-sm">person</span>
               </div>
               <span class="text-sm font-medium text-slate-700 dark:text-slate-300">
-                {{ curso.profesor|default:"Sin profesor" }}
+                Profesor: {{ curso.profesor.nombre }} {{ curso.profesor.apellido }}
               </span>
             </div>
 
-            <div class="flex items-center gap-3 mb-6">
+            <!-- Cantidad alumnos -->
+            <div class="flex items-center gap-3 mb-4">
               <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
-                <span class="material-symbols-outlined text-sm">schedule</span>
+                <span class="material-symbols-outlined text-sm">group</span>
               </div>
               <span class="text-sm text-slate-600 dark:text-slate-400">
-                {{ curso.horario|default:"Sin horario" }}
+                Alumnos inscritos: {{ curso.alumnos.count }}
               </span>
             </div>
 
-            <button class="w-full py-2.5 rounded-lg border border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-all text-sm">
-              Ver Detalles
-            </button>
+            <!-- Lista alumnos (opcional) -->
+            {% if curso.alumnos.count > 0 %}
+              <p class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">Alumnos:</p>
+              <ul class="text-xs text-slate-600 dark:text-slate-400 list-disc pl-5 space-y-1">
+                {% for alumno in curso.alumnos.all %}
+                  <li>{{ alumno.nombre }} {{ alumno.apellido }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-xs text-slate-500 dark:text-slate-400 italic">
+                Este curso aún no tiene alumnos asignados.
+              </p>
+            {% endif %}
+
           </div>
         </div>
       {% endfor %}
@@ -97,19 +92,6 @@
       No hay cursos registrados aún.
     </div>
   {% endif %}
-
-  <!-- Pagination (visual) -->
-  <div class="mt-12 flex items-center justify-center gap-2">
-    <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 text-slate-500">
-      <span class="material-symbols-outlined">chevron_left</span>
-    </button>
-    <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
-    <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 text-slate-500 font-medium">2</button>
-    <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 text-slate-500 font-medium">3</button>
-    <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 text-slate-500">
-      <span class="material-symbols-outlined">chevron_right</span>
-    </button>
-  </div>
 
 </main>
 {% endblock %}

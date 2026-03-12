@@ -4,8 +4,7 @@ from .views import lista_profesores, profesor_form_view, resultado_profesor_view
 app_name = "profesores"
 
 urlpatterns = [
-    path('', lista_profesores, name='lista_profesores'),
-
-    path('ingresar/', profesor_form_view, name='ingresar_profesor'),
-    path('resultado/', resultado_profesor_view, name='resultado_profesor'),
+    path("", lista_profesores, name="lista_profesores"),
+    path("ingresar/", profesor_form_view, name="ingresar_profesor"),
+    path("resultado/<int:pk>/", resultado_profesor_view, name="resultado_profesor"),
 ]

@@ -1,11 +1,7 @@
 from django import forms
+from .models import Profesor
 
-class ProfesorForm(forms.Form):
-    nombre = forms.CharField(label="Nombre", max_length=100)
-    materia = forms.CharField(label="Materia", max_length=100)
-
-    ESTADOS = [
-        ("Activo", "Activo"),
-        ("Inactivo", "Inactivo"),
-    ]
-    estado = forms.ChoiceField(label="Estado", choices=ESTADOS)
+class ProfesorForm(forms.ModelForm):
+    class Meta:
+        model = Profesor
+        fields = ["nombre", "apellido", "edad", "correo", "profesion"]

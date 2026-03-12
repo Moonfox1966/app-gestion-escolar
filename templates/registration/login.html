@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<main class="max-w-md mx-auto w-full px-4 py-6 pb-24">
+  <h2 class="text-xl font-bold mb-4">Iniciar sesión</h2>
+
+  <form method="post" class="space-y-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="w-full bg-primary text-white py-2 rounded-lg font-bold">
+      Entrar
+    </button>
+  </form>
+</main>
+{% endblock %}

@@ -1,2 +1,5 @@
 from django.contrib import admin
-# (Alumno) no hay modelos aún en Parte II
+from .models import Alumno
+
+# # (Alumno) registro para que se vea en el admin
+admin.site.register(Alumno)

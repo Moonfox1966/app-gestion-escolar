@@ -1,2 +1,4 @@
 from django.contrib import admin
-# (Alumno) sin modelos en esta etapa
+from .models import Profesor
+
+admin.site.register(Profesor)

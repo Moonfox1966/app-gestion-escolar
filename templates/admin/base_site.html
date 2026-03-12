@@ -1,0 +1,36 @@
+{% extends "admin/base_site.html" %}
+
+{% block branding %}
+  {# (Alumno) Branding: título del panel con link al home del admin #}
+  <h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+      Administración Central - Liceo Digital
+    </a>
+  </h1>
+{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <style>
+    /* (Alumno) Cambiamos el header del admin a un azul corporativo elegante */
+    #header {
+      background: #0d1b3e;
+    }
+
+    /* (Alumno) El título del admin en dorado para resaltar */
+    #site-name a, #site-name a:visited {
+      color: #d4af37;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* (Alumno) Sub-barra (breadcrumbs / nav) a juego */
+    .breadcrumbs {
+      background: #0b50da;
+    }
+
+    .breadcrumbs a {
+      color: #ffffff;
+    }
+  </style>
+{% endblock %}

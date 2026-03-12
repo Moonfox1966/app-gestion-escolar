@@ -1,14 +1,11 @@
 from django import forms
+from .models import Curso
 
-class CursoForm(forms.Form):
-    nombre = forms.CharField(label="Nombre del curso", max_length=120)
-    codigo = forms.CharField(label="Código", max_length=20)
-    profesor = forms.CharField(label="Profesor", max_length=120)
-    horario = forms.CharField(label="Horario", max_length=120)
-
-    NIVELES = [
-        ("Primaria", "Primaria"),
-        ("Secundaria", "Secundaria"),
-        ("Bachillerato", "Bachillerato"),
-    ]
-    nivel = forms.ChoiceField(label="Nivel", choices=NIVELES)
+class CursoForm(forms.ModelForm):
+    class Meta:
+        model = Curso
+        fields = ["nombre", "profesor", "alumnos"]
+        widgets = {
+            # # (Alumno) Para seleccionar varios alumnos con Ctrl/Cmd
+            "alumnos": forms.SelectMultiple()
+        }

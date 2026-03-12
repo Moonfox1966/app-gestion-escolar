@@ -8,8 +8,8 @@ LOGOUT_REDIRECT_URL = '/login/'
 LOGIN_URL = 'login'
 
 # Importante:
-# (Alumno) Yo NO puedo saber tu SECRET_KEY real. Mantén el que Django te generó.
-SECRET_KEY = "REEMPLAZA_ESTO_POR_TU_SECRET_KEY_REAL"
+
+SECRET_KEY = "ckJOYyndkkiAgbbBOGcnkK9dRNaouSzUbin9PWc4TvdQ88AsTQvB_nq6UzOE3AUGUhM"
 
 # (Alumno) En desarrollo dejamos DEBUG=True
 DEBUG = True

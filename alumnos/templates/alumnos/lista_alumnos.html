@@ -14,7 +14,7 @@
 
         <input
           class="w-full border-none bg-transparent focus:ring-0 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 text-base px-3"
-          placeholder="Buscar por nombre o grado..."
+          placeholder="Buscar por nombre o correo..."
           type="text"
         />
       </div>
@@ -25,7 +25,7 @@
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold">Lista de Alumnos</h2>
 
-    <!-- ✅ Botón que lleva al formulario /alumnos/ingresar/ -->
+    <!-- Botón que lleva al formulario /alumnos/ingresar/ -->
     <a
       href="{% url 'alumnos:ingresar_alumno' %}"
       class="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm"
@@ -47,44 +47,24 @@
       {% for alumno in alumnos %}
         <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-4 shadow-sm">
 
-          <!-- Avatar + punto de estado -->
-          <div class="relative">
-            <div class="size-14 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-              <span class="material-symbols-outlined">person</span>
-            </div>
-
-            {% if alumno.estado == "Activo" %}
-              <span class="absolute bottom-0 right-0 size-3.5 bg-green-500 border-2 border-white dark:border-slate-800 rounded-full"></span>
-            {% elif alumno.estado == "Tarde" %}
-              <span class="absolute bottom-0 right-0 size-3.5 bg-yellow-500 border-2 border-white dark:border-slate-800 rounded-full"></span>
-            {% else %}
-              <span class="absolute bottom-0 right-0 size-3.5 bg-slate-400 border-2 border-white dark:border-slate-800 rounded-full"></span>
-            {% endif %}
+          <!-- Avatar -->
+          <div class="size-14 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined">person</span>
           </div>
 
-          <!-- Datos del alumno -->
+          <!-- Datos del alumno (Parte IV nueva) -->
           <div class="flex-1">
-            <h3 class="font-bold text-slate-900 dark:text-slate-100">{{ alumno.nombre }}</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">
-              {{ alumno.grado }} - {{ alumno.seccion }}
-            </p>
-          </div>
+            <h3 class="font-bold text-slate-900 dark:text-slate-100">
+              {{ alumno.nombre }} {{ alumno.apellido }}
+            </h3>
 
-          <!-- Badge estado -->
-          <div class="flex flex-col items-end gap-1">
-            {% if alumno.estado == "Activo" %}
-              <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-[10px] font-bold rounded-full uppercase">
-                Activo
-              </span>
-            {% elif alumno.estado == "Tarde" %}
-              <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-[10px] font-bold rounded-full uppercase">
-                Tarde
-              </span>
-            {% else %}
-              <span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 text-[10px] font-bold rounded-full uppercase">
-                Ausente
-              </span>
-            {% endif %}
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Edad: {{ alumno.edad }}
+            </p>
+
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Correo: {{ alumno.correo }}
+            </p>
           </div>
 
         </div>
