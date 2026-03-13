@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Eliminar Curso{% endblock %}
+
+{% block content %}
+<main class="max-w-3xl mx-auto w-full px-4 py-6 pb-24">
+  <h2 class="text-xl font-bold mb-4 text-red-600">Eliminar Curso</h2>
+
+  <div class="bg-red-50 border border-red-200 text-red-800 p-4 rounded-xl mb-4">
+    <p class="font-bold">¿Estás seguro de que deseas eliminar este curso?</p>
+    <p class="text-sm mt-1">
+      Esta acción eliminará permanentemente el curso
+      <strong>{{ curso.nombre }}</strong>.
+    </p>
+  </div>
+
+  <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-4">
+    <div>
+      <p class="text-xs text-slate-500 dark:text-slate-400">Nombre del curso</p>
+      <p class="font-semibold text-slate-900 dark:text-slate-100">{{ curso.nombre }}</p>
+    </div>
+
+    <div>
+      <p class="text-xs text-slate-500 dark:text-slate-400">Profesor</p>
+      <p class="font-semibold text-slate-900 dark:text-slate-100">
+        {{ curso.profesor.nombre }} {{ curso.profesor.apellido }}
+      </p>
+    </div>
+
+    <div>
+      <p class="text-xs text-slate-500 dark:text-slate-400">Alumnos inscritos</p>
+      <p class="font-semibold text-slate-900 dark:text-slate-100">{{ curso.alumnos.count }}</p>
+    </div>
+
+    {% if curso.alumnos.count > 0 %}
+      <div>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Alumnos asociados</p>
+        <ul class="list-disc pl-5 space-y-1 text-slate-700 dark:text-slate-300">
+          {% for alumno in curso.alumnos.all %}
+            <li>{{ alumno.nombre }} {{ alumno.apellido }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+
+  <form method="POST" class="mt-4 space-y-3">
+    {% csrf_token %}
+
+    <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-lg font-bold">
+      Sí, eliminar definitivamente
+    </button>
+
+    <a
+      href="{% url 'cursos:lista_cursos' %}"
+      class="block w-full text-center bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 py-2 rounded-lg font-bold"
+    >
+      Cancelar
+    </a>
+  </form>
+</main>
+{% endblock %}

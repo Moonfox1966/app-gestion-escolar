@@ -1,28 +1,68 @@
 {% extends "base.html" %}
-{% block title %}Inicio{% endblock %}
+{% block title %}Inicio | Gestión Escolar{% endblock %}
 
 {% block content %}
-<main class="max-w-7xl mx-auto w-full px-4 py-8">
-  <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
-    <h2 class="text-2xl font-bold text-navy-custom dark:text-slate-100">Bienvenido a Gestión Escolar</h2>
-    <p class="text-slate-500 dark:text-slate-400 mt-2">
-      Usa el menú para navegar entre Alumnos, Profesores y Cursos.
-    </p>
+<main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 pb-24">
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-      <a class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 hover:shadow"
-         href="{% url 'alumnos:lista_alumnos' %}">
-        <p class="font-bold">Ir a Alumnos</p>
+  <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-6 md:p-8">
+    <div class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
+        Bienvenido a Gestión Escolar
+      </h1>
+      <p class="mt-2 text-slate-600 dark:text-slate-400 text-base">
+        Usa el menú para navegar entre Alumnos, Profesores y Cursos.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-5">
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">Total Alumnos</p>
+        <p class="text-3xl font-bold text-slate-900 dark:text-white">{{ total_alumnos }}</p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-5">
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">Total Profesores</p>
+        <p class="text-3xl font-bold text-slate-900 dark:text-white">{{ total_profesores }}</p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-5">
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">Total Cursos</p>
+        <p class="text-3xl font-bold text-slate-900 dark:text-white">{{ total_cursos }}</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <a
+        href="{% url 'alumnos:lista_alumnos' %}"
+        class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 hover:shadow-md transition"
+      >
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Ir a Alumnos</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400">
+          Administra el registro de estudiantes.
+        </p>
       </a>
-      <a class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 hover:shadow"
-         href="{% url 'profesores:lista_profesores' %}">
-        <p class="font-bold">Ir a Profesores</p>
+
+      <a
+        href="{% url 'profesores:lista_profesores' %}"
+        class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 hover:shadow-md transition"
+      >
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Ir a Profesores</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400">
+          Revisa y administra docentes registrados.
+        </p>
       </a>
-      <a class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 hover:shadow"
-         href="{% url 'cursos:lista_cursos' %}">
-        <p class="font-bold">Ir a Cursos</p>
+
+      <a
+        href="{% url 'cursos:lista_cursos' %}"
+        class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 hover:shadow-md transition"
+      >
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Ir a Cursos</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400">
+          Consulta cursos, profesor asignado y alumnos inscritos.
+        </p>
       </a>
     </div>
-  </div>
+  </section>
+
 </main>
 {% endblock %}

@@ -1,17 +1,28 @@
 {% extends "base.html" %}
-{% block title %}Ingresar Curso{% endblock %}
+{% block title %}
+  {% if modo == "editar" %}Editar Curso{% else %}Ingresar Curso{% endif %}
+{% endblock %}
 
 {% block content %}
 <main class="max-w-md mx-auto w-full px-4 py-6 pb-24">
-  <h2 class="text-xl font-bold mb-4">Ingresar Curso</h2>
+  <h2 class="text-xl font-bold mb-4">
+    {% if modo == "editar" %}Editar Curso{% else %}Ingresar Curso{% endif %}
+  </h2>
 
   <form method="POST" class="space-y-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
     {% csrf_token %}
     {{ form.as_p }}
 
     <button type="submit" class="w-full bg-primary text-white py-2 rounded-lg font-bold">
-      Guardar Curso
+      {% if modo == "editar" %}Guardar Cambios{% else %}Guardar Curso{% endif %}
     </button>
+
+    <a
+      href="{% url 'cursos:lista_cursos' %}"
+      class="block w-full text-center bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 py-2 rounded-lg font-bold"
+    >
+      Cancelar
+    </a>
   </form>
 </main>
 {% endblock %}
